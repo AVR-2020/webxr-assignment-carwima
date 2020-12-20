@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basic Scene</title>
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+    <script src="https://threejs.org/build/three.js"></script>
+    <script src="index.js"></script>
+</head>
+<body>
+    <a-scene>
+        <a-entity id="rig" position="0 2 0">
+            <a-entity id="camera" camera look-controls></a-entity>
+        </a-entity>
+        <a-assets>
+            <img id="wall" src="textures/seamless_wall.jpg">
+            <img id="wall2" src="textures/seamless_wall2.png">
+            <img id="road" src="textures/seamless_road.jpg">
+            <img id="building_05-obj" src="building_05.obj">
+            <img id="building_05-mtl" src="building_05.mtl">
+        </a-assets>
+        <a-entity house></a-entity>
+        <!-- <a-obj-model src="building_05.obj" mtl="building_05.mtl"></a-obj-model>
+        -->
+        <a-box
+            id="obj_wall"
+            repeat="5 2"
+            src="#wall2"
+            position="-1 1.5 -3"
+            scale="0.2 2 5"
+        ></a-box>
+        
+        <a-box
+            id="obj_road"
+            material="src:#road; repeat: 80 80"
+            position="0 0 0"
+            scale="100 1 100"
+        ></a-box>
+        <a-sky color="lightblue"></a-sky>
+    </a-scene>
+</body>
+</html>
