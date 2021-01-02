@@ -5,38 +5,119 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Basic Scene</title>
     <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
-    <script src="https://threejs.org/build/three.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
+    <!-- a bunch of scripts idk what's for.. yet-->
+    <script src="https://unpkg.com/aframe-teleport-controls@0.2.x/dist/aframe-teleport-controls.min.js"></script>
+    <script src="https://unpkg.com/aframe-controller-cursor-component@0.2.x/dist/aframe-controller-cursor-component.min.js"></script>
+    <script src="https://rawgit.com/ngokevin/kframe/csstricks/scenes/aincraft/components/random-color.js"></script>
+    <script src="https://rawgit.com/ngokevin/kframe/csstricks/scenes/aincraft/components/snap.js"></script>
+    <script src="https://rawgit.com/ngokevin/kframe/csstricks/scenes/aincraft/components/intersection-spawn.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/n5ro/aframe-physics-system@v4.0.1/dist/aframe-physics-system.min.js"></script>
+
     <script src="index.js"></script>
 </head>
 <body>
-    <a-scene>
-        <a-entity id="rig" position="0 2 0">
-            <a-entity id="camera" camera look-controls></a-entity>
-        </a-entity>
+    <a-scene physics>
+        
         <a-assets>
+            <a-mixin id="voxel"
+            geometry="primitive: box; height: 0.5; width: 0.5; depth: 0.5"
+            material="shader: standard"
+            random-color
+            snap="offset: 0.25 0.25 0.25; snap: 0.5 0.5 0.5"
+            ></a-mixin>
+
             <img id="wall" src="textures/seamless_wall.jpg">
             <img id="wall2" src="textures/seamless_wall2.png">
             <img id="road" src="textures/seamless_road.jpg">
-            <img id="building_05-obj" src="building_05.obj">
-            <img id="building_05-mtl" src="building_05.mtl">
+            
+            <a-asset-item id="gedung_01" src="models/bld_05.glb"></a-asset-item>
+            <a-asset-item id="gedung_02" src="models/bld_02/scene.gltf"></a-asset-item>
+            <a-asset-item id="tree" src="models/tree_1/scene.gltf"></a-asset-item>
         </a-assets>
-        <a-entity house></a-entity>
-        <!-- <a-obj-model src="building_05.obj" mtl="building_05.mtl"></a-obj-model>
-        -->
+        
+        <a-entity id="rig" movement-controls kinematic-body camera-listener>
+            <a-entity id="camera" camera position="0 1.6 0" look-controls  ></a-entity>
+        </a-entity>
+
+        <a-gltf-model
+            rotate="0 180 0"
+            id="ged_1"
+            src="#gedung_01"
+            position="25  0.5 25"
+            scale="5 5 5"
+            static-body="shape: box;"
+        ></a-gltf-model>
+
+        <a-gltf-model 
+            id="ged_2"
+            src="#gedung_02"
+            position="25 0 -25"
+            scale="5 5 5 "
+            static-body="shape: box;"
+        ></a-gltf-model>
+
         <a-box
             id="obj_wall"
             repeat="5 2"
             src="#wall2"
-            position="-1 1.5 -3"
+            position="-1 1.5 -6"
             scale="0.2 2 5"
+            static-body="shape: box;"
         ></a-box>
-        
+        <a-entity id="edge_wall">
+            <a-box
+                id="edge_wall1"
+                repeat="50 2"
+                src="#wall2"
+                position="50 1.5 0"
+                scale="0.2 2 100"
+                static-body="shape: box;"
+            ></a-box>
+            <a-box
+                id="edge_wall1"
+                repeat="50 2"
+                src="#wall2"
+                position="-50 1.5 0"
+                scale="0.2 2 100"
+                static-body="shape: box;"
+            ></a-box>
+            <a-box
+                id="edge_wall2"
+                repeat="50 2"
+                src="#wall2"
+                position="0 1.5 50"
+                scale="100 2 0.2"
+                static-body="shape: box;"
+            ></a-box>
+            <a-box
+                id="edge_wall2"
+                repeat="50 2"
+                src="#wall2"
+                position="0 1.5 -50"
+                scale="100 2 0.2"
+                static-body="shape: box;"
+            ></a-box>
+        </a-entity>
+        <a-gltf-model 
+            static-body="shape: box;"
+            id="tree_1"
+            repeat="5 2"
+            src="#tree"
+            position="5 0.5 5"
+            scale="0.05 0.05 0.05"
+            ></a-gltf-model>
+
         <a-box
+            static-body="shape: box;"
             id="obj_road"
             material="src:#road; repeat: 80 80"
             position="0 0 0"
             scale="100 1 100"
         ></a-box>
+        <a-entity geometry="primitive: box" material="color: red" position="0 1 -4" threetext>
+            
+        </a-entity>
         <a-sky color="lightblue"></a-sky>
     </a-scene>
 </body>
