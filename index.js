@@ -1,12 +1,14 @@
 AFRAME.registerComponent('camera-listener', {
   tick: function () {
     var a=new THREE.Vector3(this.el.getAttribute('position').x,this.el.getAttribute('position').y,this.el.getAttribute('position').z);
-    var b=new THREE.Vector3(0,this.el.getAttribute('position').y,0)
     var objective= document.getElementById('tree_1').object3D.position;
     var c=new THREE.Vector3(objective.x,this.el.getAttribute('position').y,objective.z);
-    //console.log(c)
+    console.log(a)
+    
     if(a.distanceTo( c )<=1)
-     console.log(a.distanceTo( c ));
+      document.getElementById('text-succeed').object3D.visible=true;
+    else
+      document.getElementById('text-succeed').object3D.visible=false;
     // Do something.
   }
 });
@@ -25,15 +27,15 @@ function randomColor() {
 }
 
 AFRAME.registerComponent('threetext', {
-  tick: function () {
+  init: function () {
     var elm=this.el;
     var loader = new THREE.FontLoader();
     loader.load( 'https://threejs.org/examples/fonts/helvetiker_regular.typeface.json', function ( font ) {
-        var strine="IDGAF";
+        var strine="Succeed";
         var geometry = new THREE.TextGeometry( strine, {
             font: font,
             size: 1,
-            height: 0.5,
+            height: 0.2,
             curveSegments: 0,
             bevelEnabled: false,
             bevelThickness: 0.5,
