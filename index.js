@@ -1,4 +1,5 @@
-var start =new Date();
+var start;
+var now;
 var game_start=0;
 var time;
 var cam;
@@ -13,6 +14,7 @@ var object_place = [
   "47 0.5 -21",
   "24.4 0.5 27.4"
 ];
+
 AFRAME.registerComponent('camera-listener', {
   tick: function () {
     cam=new THREE.Vector3(this.el.getAttribute('position').x,this.el.getAttribute('position').y,this.el.getAttribute('position').z);
@@ -21,7 +23,7 @@ AFRAME.registerComponent('camera-listener', {
     
     // Do something.
     if(game_start==1){
-      var now=new Date();
+      now=new Date();
       var sec=Math.floor(((now-start)/1000)%60);
       var min=Math.floor(((now-start)/1000)/60);
       time= ("0" +min.toString()).slice(-2)+":"+("0" +sec.toString()).slice(-2);
@@ -30,6 +32,20 @@ AFRAME.registerComponent('camera-listener', {
   }
 });
 
+AFRAME.registerComponent('info', {
+  tick: function () {
+    // Do something.
+    if(game_start==1){
+      var sec=Math.floor(((now-start)/1000));
+      if(sec>1)
+        this.el.setAttribute('value', "USE WASD FOR CONTROLS");
+      else if(sec>3)
+        this.el.setAttribute('value', "Go Find The Customer And Deliver Their Order");
+      else if(sec>3)
+        this.el.setAttribute('value', "Goodluck and Have fun!");
+    }
+  }
+});
 
 function rand(min, max) {
   if (max === undefined) {
@@ -96,8 +112,9 @@ AFRAME.registerComponent('cursor_char', {
     this.el.addEventListener('click', function (evt) { 
       alert("jarak"+cam.distanceTo( obj ))
       if(cam.distanceTo( obj )<=1.7){
-        alert('game selesai');
         document.getElementById('text-succeed').object3D.visible=true;
+        alert('game selesai');
+        location.reload(); 
       }
       else  
         document.getElementById('text-succeed').object3D.visible=false;
