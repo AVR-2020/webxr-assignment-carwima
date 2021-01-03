@@ -1,9 +1,8 @@
 AFRAME.registerComponent('camera-listener', {
   tick: function () {
     var a=new THREE.Vector3(this.el.getAttribute('position').x,this.el.getAttribute('position').y,this.el.getAttribute('position').z);
-    var objective= document.getElementById('tree_1').object3D.position;
+    var objective= document.getElementById('char_1').object3D.position;
     var c=new THREE.Vector3(objective.x,this.el.getAttribute('position').y,objective.z);
-    console.log(a)
     
     if(a.distanceTo( c )<=1)
       document.getElementById('text-succeed').object3D.visible=true;
