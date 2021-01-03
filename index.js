@@ -5,15 +5,16 @@ var time;
 var cam;
 var obj;
 var object_place = [
-  "63 0.5 -38",
-  "63 0.5 -28",
-  "63 0.5 -18",
-  "63 0.5 -8",
+  "63 0.5 -40",
+  "63 0.5 -27.6",
+  "63 0.5 -14.5",
+  "63 0.5 -2.8",
   "47 0.5 -42",
   "47 0.5 -31",
   "47 0.5 -21",
   "24.4 0.5 27.4"
 ];
+
 
 AFRAME.registerComponent('camera-listener', {
   tick: function () {
@@ -37,12 +38,14 @@ AFRAME.registerComponent('info', {
     // Do something.
     if(game_start==1){
       var sec=Math.floor(((now-start)/1000));
-      if(sec>1)
-        this.el.setAttribute('value', "USE WASD FOR CONTROLS");
-      else if(sec>3)
-        this.el.setAttribute('value', "Go Find The Customer And Deliver Their Order");
-      else if(sec>3)
+      if(sec>11)
+        document.getElementById('info').object3D.visible=false;
+      else if(sec>8)
         this.el.setAttribute('value', "Goodluck and Have fun!");
+      else if(sec>4)
+        this.el.setAttribute('value', "Go Find The Customer And Deliver Their Order By Clicking them");
+      else if(sec>1)
+        this.el.setAttribute('value', "You can use WASD For movement");
     }
   }
 });
@@ -96,6 +99,7 @@ AFRAME.registerComponent('cursor-text', {
     this.el.addEventListener('click', function (evt) {
       start=new Date();
       game_start=1;
+      document.getElementById('info').object3D.visible=true;
       //console.log();
       this.setAttribute('material', 'color', randomColor());
       this.remove();
@@ -103,18 +107,20 @@ AFRAME.registerComponent('cursor-text', {
   }
 });
 
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
 AFRAME.registerComponent('cursor_char', {
   init: function () {
     var nran=Math.floor(rand(0, 7));
     console.log(nran+" "+object_place[nran]);
     this.el.setAttribute('position', object_place[nran]);
-
     this.el.addEventListener('click', function (evt) { 
-      alert("jarak"+cam.distanceTo( obj ))
+      //alert("jarak"+cam.distanceTo( obj ))
       if(cam.distanceTo( obj )<=1.7){
         document.getElementById('text-succeed').object3D.visible=true;
-        alert('game selesai');
-        location.reload(); 
+        alert('Your Time is : '+time);
+        location.reload();
       }
       else  
         document.getElementById('text-succeed').object3D.visible=false;
