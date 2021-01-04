@@ -99,6 +99,7 @@ AFRAME.registerComponent('cursor-text', {
     this.el.addEventListener('click', function (evt) {
       start=new Date();
       game_start=1;
+      document.getElementById('score').object3D.el.setAttribute('position','12  0 -48');
       document.getElementById('info').object3D.visible=true;
       //console.log();
       this.setAttribute('material', 'color', randomColor());
@@ -117,7 +118,7 @@ AFRAME.registerComponent('cursor_char', {
     this.el.setAttribute('position', object_place[nran]);
     this.el.addEventListener('click', function (evt) { 
       //alert("jarak"+cam.distanceTo( obj ))
-      if(cam.distanceTo( obj )<=1.7){
+      if(cam.distanceTo( obj )<=1.7 && game_start==1){
         document.getElementById('text-succeed').object3D.visible=true;
         alert('Your Time is : '+time);
         location.reload();
