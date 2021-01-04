@@ -99,7 +99,7 @@ AFRAME.registerComponent('cursor-text', {
     this.el.addEventListener('click', function (evt) {
       start=new Date();
       game_start=1;
-      document.getElementById('score').object3D.el.setAttribute('position','12  0 -48');
+      document.getElementById('rig').object3D.el.setAttribute('position','12  0 -48');
       document.getElementById('info').object3D.visible=true;
       //console.log();
       this.setAttribute('material', 'color', randomColor());
